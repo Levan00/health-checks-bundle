@@ -7,7 +7,7 @@ namespace SymfonyHealthCheckBundle\Dto;
 class Response
 {
     public function __construct(
-        private readonly string $component,
+        private readonly string $name,
         private readonly string $status,
         private readonly string $description,
         private readonly string $duration
@@ -15,9 +15,9 @@ class Response
     {
     }
 
-    public function getComponent(): string
+    public function getName(): string
     {
-        return $this->component;
+        return $this->name;
     }
 
     public function getStatus(): string
@@ -38,7 +38,7 @@ class Response
     public function toArray(): array
     {
         return [
-            $this->getComponent() => [
+            $this->getName() => [
                 'status' => $this->getStatus(),
                 'description' => $this->getDescription(),
                 'duration' => $this->getDuration(),
