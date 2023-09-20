@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace SymfonyHealthCheckBundle\Check;
 
-use SymfonyHealthCheckBundle\Dto\Response;
+use SymfonyHealthCheckBundle\Dto\ResponseDto;
 
 class StatusUpCheck implements CheckInterface
 {
-    public function check(string $component): Response
+    public function check(): ResponseDto
     {
-        return new Response($component, 'pass', 'Status up description', '0.1');
+        return new ResponseDto($name, 'pass', 'Status up description', '0.1');
     }
 }

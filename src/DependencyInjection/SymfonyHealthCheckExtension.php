@@ -42,11 +42,5 @@ class SymfonyHealthCheckExtension extends Extension
             $healthCheckDefinition = new Reference($healthCheckConfig['id']);
             $healthCheckCollection->addMethodCall('addHealthCheck', [$healthCheckDefinition]);
         }
-
-        $pingCollection = $container->findDefinition(PingController::class);
-        foreach ($config['ping_checks'] as $healthCheckConfig) {
-            $healthCheckDefinition = new Reference($healthCheckConfig['id']);
-            $pingCollection->addMethodCall('addHealthCheck', [$healthCheckDefinition]);
-        }
     }
 }

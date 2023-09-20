@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace SymfonyHealthCheckBundle\Check;
 
-use SymfonyHealthCheckBundle\Dto\Response;
+use SymfonyHealthCheckBundle\Dto\ResponseDto;
 
 interface CheckInterface
 {
-    public function check(string $component): Response;
+    public function check(): ResponseDto;
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SymfonyHealthCheckBundle\Dto;
 
-class Response
+class ResponseDto
 {
     public function __construct(
         private readonly string $name,

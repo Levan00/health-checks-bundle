@@ -23,14 +23,6 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                ->arrayNode('ping_checks')
-                    ->prototype('array')
-                        ->children()
-                            ->scalarNode('name')->cannotBeEmpty()->end()
-                            ->scalarNode('description')->cannotBeEmpty()->end()
-                        ->end()
-                    ->end()
-                ->end()
             ->end()
         ;
 
