@@ -22,7 +22,7 @@ class SymfonyHealthCheckBundle extends AbstractBundle
                 ->arrayNode('health_checks')
                     ->arrayPrototype()
                         ->children()
-                            ->integerNode('id')->cannotBeEmpty()->end()
+                            ->scalarNode('id')->cannotBeEmpty()->end()
                             ->scalarNode('name')->cannotBeEmpty()->end()
                         ->end()
                     ->end()
@@ -30,7 +30,6 @@ class SymfonyHealthCheckBundle extends AbstractBundle
                 ->arrayNode('ping_checks')
                     ->arrayPrototype()
                         ->children()
-//                            ->integerNode('id')->cannotBeEmpty()->end()
                             ->scalarNode('name')->cannotBeEmpty()->end()
                             ->scalarNode('endpoint')->cannotBeEmpty()->end()
                         ->end()
@@ -46,8 +45,7 @@ class SymfonyHealthCheckBundle extends AbstractBundle
         ContainerBuilder $containerBuilder
     ): void
     {
-        $containerConfigurator->import('../config/controller.xml');
-        $containerConfigurator->import('../config/service.xml');
+        $containerConfigurator->import('../config/services.yaml');
 
         $healthCheckCollection = $containerBuilder->findDefinition(HealthController::class);
 

@@ -1,0 +1,17 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: true
+
+    SymfonyHealthCheckBundle\Controller\HealthController:
+        tags:
+            - { name: container.service_subscriber }
+
+    SymfonyHealthCheckBundle\Controller\PingController:
+        tags:
+            - { name: container.service_subscriber }
+
+    symfony_health_check.doctrine_check:
+        class: SymfonyHealthCheckBundle\Check\DoctrineCheck
+        arguments: [ '@service_container' ]
