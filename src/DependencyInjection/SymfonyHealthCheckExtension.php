@@ -11,10 +11,12 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use SymfonyHealthCheckBundle\Controller\HealthController;
-use SymfonyHealthCheckBundle\Controller\PingController;
 
 class SymfonyHealthCheckExtension extends Extension
 {
+    /**
+     * @throws Exception
+     */
     public function load(array $configs, ContainerBuilder $container): void
     {
         $configuration = new Configuration();
@@ -23,23 +25,31 @@ class SymfonyHealthCheckExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('controller.xml');
 
-        $this->loadHealthChecks($config, $loader, $container);
+        $this->loadServices($config, $loader, $container);
     }
 
     /**
      * @throws Exception
      */
-    private function loadHealthChecks(
+    private function loadServices(
         array $config,
         XmlFileLoader $loader,
         ContainerBuilder $container
     ): void {
-        $loader->load('health_checks.xml');
+        $loader->load('services.xml');
 
         $healthCheckCollection = $container->findDefinition(HealthController::class);
 
         foreach ($config['health_checks'] as $healthCheckConfig) {
             $healthCheckDefinition = new Reference($healthCheckConfig['id']);
+            $healthCheckCollection->addMethodCall('addHealthCheck', [$healthCheckDefinition]);
+        }
+
+        foreach ($config['ping_checks'] as $healthCheckConfig) {
+            $healthCheckDefinition = $container->getDefinition($healthCheckConfig['id'])
+                ->replaceArgument(0, $healthCheckConfig['name'])
+                ->replaceArgument(1, $healthCheckConfig['endpoint']);
+
             $healthCheckCollection->addMethodCall('addHealthCheck', [$healthCheckDefinition]);
         }
     }

@@ -4,12 +4,12 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services
     http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <defaults autowire="true" autoconfigure="true" />
+        <defaults autowire="true" autoconfigure="true" public="true" />
 
-        <service public="true" id="SymfonyHealthCheckBundle\Controller\HealthController" class="SymfonyHealthCheckBundle\Controller\HealthController">
+        <service id="SymfonyHealthCheckBundle\Controller\HealthController" class="SymfonyHealthCheckBundle\Controller\HealthController">
             <tag name="container.service_subscriber" />
         </service>
-        <service public="true" id="SymfonyHealthCheckBundle\Controller\PingController" class="SymfonyHealthCheckBundle\Controller\PingController">
+        <service id="SymfonyHealthCheckBundle\Controller\PingController" class="SymfonyHealthCheckBundle\Controller\PingController">
             <tag name="container.service_subscriber" />
         </service>
     </services>

@@ -1,13 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services
+    http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="symfony_health_check_bundle.http_client" class="Symfony\Component\HttpClient\HttpClient">
+        <defaults autowire="true" autoconfigure="true" public="true" />
 
-        <service id="symfony_health_check_bundle.status_up_check" class="SymfonyHealthCheckBundle\Check\Ping\StatusUpCheck">
-            <argument type="service" id="symfony_health_check_bundle.http_client" />
+        <service id="symfony_health_check.doctrine_check" class="SymfonyHealthCheckBundle\Check\DoctrineCheck">
+            <argument type="service" id="service_container" />
+        </service>
+
+        <service id="symfony_health_check.status_up_check" class="PingCheck">
+            <argument key="name" />
+            <argument key="endpoint" />
         </service>
     </services>
 </container>

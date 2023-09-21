@@ -2,19 +2,25 @@
 
 declare(strict_types=1);
 
-namespace SymfonyHealthCheckBundle\Check\Ping;
+namespace SymfonyHealthCheckBundle\Check;
 
+use GuzzleHttp\Client;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Stopwatch\Stopwatch;
-use Symfony\Component\HttpClient\HttpClient;
-use SymfonyHealthCheckBundle\Check\CheckInterface;
 use SymfonyHealthCheckBundle\Dto\ResponseDto;
 use SymfonyHealthCheckBundle\Enum\Status;
 use Throwable;
 
-class StatusUpCheck implements CheckInterface
+class PingCheck implements CheckInterface
 {
     public const RESPONSE_TEXT = 'pong';
+
+    public function __construct(
+        private readonly string $name,
+        private readonly string $endpoint
+    )
+    {
+    }
 
     public function check(): ResponseDto
     {
@@ -22,11 +28,11 @@ class StatusUpCheck implements CheckInterface
 
         $stopwatch->start('status_up');
 
-        $client = HttpClient::create(['http_version' => '2.0']);
+        $client = new Client();
         try {
-            $response = $client->request('GET', 'https://local_geoip.ringostat.net/ping');
+            $response = $client->request('GET', $this->endpoint);
             $statusCode = $response->getStatusCode();
-            $responseText = $response->getContent();
+            $responseText = $response->getBody();
         } catch (Throwable $e) {
             $statusCode = 0;
             $responseText = '';
@@ -41,9 +47,9 @@ class StatusUpCheck implements CheckInterface
         };
 
         return new ResponseDto(
-            'Status up name',
+            $this->name,
             $responseStatus,
-            'Status up description',
+            'Description',
             $event->getDuration()
         );
     }
