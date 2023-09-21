@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace SymfonyHealthCheckBundle\Check;
 
-use GuzzleHttp\Client;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Stopwatch\Stopwatch;
 use SymfonyHealthCheckBundle\Dto\ResponseDto;
@@ -28,11 +28,11 @@ class PingCheck implements CheckInterface
 
         $stopwatch->start('status_up');
 
-        $client = new Client();
+        $client = HttpClient::create();
         try {
             $response = $client->request('GET', $this->endpoint);
             $statusCode = $response->getStatusCode();
-            $responseText = $response->getBody();
+            $responseText = $response->getContent();
         } catch (Throwable $e) {
             $statusCode = 0;
             $responseText = '';

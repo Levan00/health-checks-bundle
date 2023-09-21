@@ -32,7 +32,6 @@ final class HealthController extends AbstractController
         $result = [
             'status' => Status::PASS,
             'version' => 'version from git',
-            'duration' => 0,
             'time' => (new DateTime())->format('Y-m-d H:i:s'),
             'checks' => [],
         ];
