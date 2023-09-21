@@ -26,6 +26,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('ping_checks')
                     ->arrayPrototype()
                         ->children()
+                            ->scalarNode('id')->cannotBeEmpty()->end()
                             ->scalarNode('name')->cannotBeEmpty()->end()
                             ->scalarNode('endpoint')->cannotBeEmpty()->end()
                         ->end()
