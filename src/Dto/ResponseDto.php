@@ -10,7 +10,7 @@ class ResponseDto
         private readonly string $name,
         private readonly string $status,
         private readonly string $description,
-        private readonly string $duration
+        private readonly float $duration
     )
     {
     }
@@ -30,7 +30,7 @@ class ResponseDto
         return $this->description;
     }
 
-    public function getDuration(): string
+    public function getDuration(): float
     {
         return $this->duration;
     }

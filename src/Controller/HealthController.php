@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace SymfonyHealthCheckBundle\Controller;
 
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,29 +29,30 @@ final class HealthController extends AbstractController
     #[Route('/health', name: 'health', methods: ['GET'])]
     public function healthCheckAction(): JsonResponse
     {
-        $resultHealthCheck = [
+        $result = [
             'status' => Status::PASS,
             'version' => 'version from git',
-            'duration' => '',
-            'time' => (new \DateTime())->format(''),
+            'duration' => 0,
+            'time' => (new DateTime())->format('Y-m-d H:i:s'),
             'checks' => [],
         ];
 
         $stopwatch = new Stopwatch();
-        $stopwatch->start('duration');
+        $stopwatch->start('health_check');
 
         foreach ($this->healthChecks as $healthCheck) {
             $response = $healthCheck->check();
 
-            $resultHealthCheck['checks'][] += $response->toArray();
+            $result['checks'][] += $response->toArray();
 
-            if ($response->getStatus() === Status::FAIL) {
-                $resultHealthCheck['status'] = Status::FAIL;
-            } elseif ($response->getStatus() === Status::WARNING && $resultHealthCheck['status'] === Status::PASS) {
-                $resultHealthCheck['status'] = Status::WARNING;
-            }
+            $result['status'] = match (true) {
+                $response->getStatus() === Status::FAIL => Status::FAIL,
+                $response->getStatus() === Status::WARNING && $result['status'] === Status::PASS => Status::WARNING,
+            };
         }
 
-        return new JsonResponse($resultHealthCheck, Response::HTTP_OK);
+        $result['duration'] = $stopwatch->stop('health_check');
+
+        return new JsonResponse($result, Response::HTTP_OK);
     }
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="symfony_health_check_bundle.http_client" class="Symfony\Component\HttpClient\HttpClient">
+
+        <service id="symfony_health_check_bundle.status_up_check" class="SymfonyHealthCheckBundle\Check\Ping\StatusUpCheck">
+            <argument type="service" id="symfony_health_check_bundle.http_client" />
+        </service>
+    </services>
+</container>
