@@ -4,23 +4,37 @@ declare(strict_types=1);
 
 namespace SymfonyHealthCheckBundle;
 
-//use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
-//use Symfony\Component\DependencyInjection\ContainerBuilder;
-//use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use Symfony\Component\HttpKernel\Bundle\Bundle;
+use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\DependencyInjection\Reference;
+use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-//use SymfonyHealthCheckBundle\Controller\HealthController;
+use SymfonyHealthCheckBundle\Check\PingCheck;
+use SymfonyHealthCheckBundle\Controller\HealthController;
 
-class SymfonyHealthCheckBundle extends Bundle
+class SymfonyHealthCheckBundle extends AbstractBundle
 {
-/*    public function configure(DefinitionConfigurator $definition): void
+    public function configure(DefinitionConfigurator $definition): void
     {
         $definition->rootNode()
             ->children()
-                ->children()
-                    ->integerNode('id')->cannotBeEmpty()->end()
-                    ->scalarNode('name')->cannotBeEmpty()->end()
-                    ->scalarNode('endpoint')->cannotBeEmpty()->end()
+                ->arrayNode('health_checks')
+                    ->arrayPrototype()
+                        ->children()
+                            ->integerNode('id')->cannotBeEmpty()->end()
+                            ->scalarNode('name')->cannotBeEmpty()->end()
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('ping_checks')
+                    ->arrayPrototype()
+                        ->children()
+//                            ->integerNode('id')->cannotBeEmpty()->end()
+                            ->scalarNode('name')->cannotBeEmpty()->end()
+                            ->scalarNode('endpoint')->cannotBeEmpty()->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
         ;
@@ -43,11 +57,12 @@ class SymfonyHealthCheckBundle extends Bundle
         }
 
         foreach ($config['ping_checks'] as $healthCheckConfig) {
-            $healthCheckDefinition = $containerBuilder->getDefinition($healthCheckConfig['id'])
-                ->replaceArgument(0, $healthCheckConfig['name'])
-                ->replaceArgument(1, $healthCheckConfig['endpoint']);
+            $healthCheckDefinition = $containerConfigurator->services()
+                ->set(null, PingCheck::class)
+                ->args($healthCheckConfig)
+            ;
 
             $healthCheckCollection->addMethodCall('addHealthCheck', [$healthCheckDefinition]);
         }
-    }*/
+    }
 }
