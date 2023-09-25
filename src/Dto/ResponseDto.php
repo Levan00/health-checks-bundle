@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace SymfonyHealthCheckBundle\Dto;
 
+use DateTime;
+
 class ResponseDto
 {
     public function __construct(
@@ -41,7 +43,7 @@ class ResponseDto
             $this->getName() => [
                 'status' => $this->getStatus(),
                 'description' => $this->getDescription(),
-                'duration' => $this->getDuration(),
+                'duration' => DateTime::createFromFormat('U.u', strval($this->getDuration() / 1000))->format("H:i:s.u"),
             ]
         ];
     }

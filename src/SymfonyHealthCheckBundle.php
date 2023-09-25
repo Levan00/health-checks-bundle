@@ -23,14 +23,13 @@ class SymfonyHealthCheckBundle extends AbstractBundle
                     ->arrayPrototype()
                         ->children()
                             ->scalarNode('id')->cannotBeEmpty()->end()
-                            ->scalarNode('name')->cannotBeEmpty()->end()
                         ->end()
                     ->end()
                 ->end()
                 ->arrayNode('ping_checks')
                     ->arrayPrototype()
                         ->children()
-                            ->scalarNode('name')->cannotBeEmpty()->end()
+                            ->scalarNode('service')->cannotBeEmpty()->end()
                             ->scalarNode('endpoint')->cannotBeEmpty()->end()
                         ->end()
                     ->end()
@@ -54,13 +53,16 @@ class SymfonyHealthCheckBundle extends AbstractBundle
             $healthCheckCollection->addMethodCall('addHealthCheck', [$healthCheckDefinition]);
         }
 
-        foreach ($config['ping_checks'] as $healthCheckConfig) {
-            $healthCheckDefinition = $containerConfigurator->services()
-                ->set(null, PingCheck::class)
-                ->args($healthCheckConfig)
+        foreach ($config['ping_checks'] as $number => $healthCheckConfig) {
+            $id = 'symfony_health_check.ping_check_' . $number;
+
+            $containerConfigurator->services()
+                ->set($id, PingCheck::class)
+                    ->arg('$service', $healthCheckConfig['service'])
+                    ->arg('$endpoint', $healthCheckConfig['endpoint'])
             ;
 
-            $healthCheckCollection->addMethodCall('addHealthCheck', [$healthCheckDefinition]);
+            $healthCheckCollection->addMethodCall('addHealthCheck', [new Reference($id)]);
         }
     }
 }

@@ -12,6 +12,10 @@ services:
         tags:
             - { name: container.service_subscriber }
 
+    symfony_health_check.mongodb_connection_check:
+        class: SymfonyHealthCheckBundle\Check\MongoDbConnectionCheck
+        arguments: [ '@service_container' ]
+
     symfony_health_check.doctrine_check:
         class: SymfonyHealthCheckBundle\Check\DoctrineCheck
         arguments: [ '@service_container' ]

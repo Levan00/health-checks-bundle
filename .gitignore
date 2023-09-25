@@ -2,5 +2,6 @@
 /.idea
 
 ###> symfony/framework-bundle ###
+/composer.lock
 /vendor/
 ###< symfony/framework-bundle ###
