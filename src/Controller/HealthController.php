@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SymfonyHealthCheckBundle\Controller;
+namespace HealthChecksBundle\Controller;
 
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -10,9 +10,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Stopwatch\Stopwatch;
-use SymfonyHealthCheckBundle\Check\CheckInterface;
-use SymfonyHealthCheckBundle\Dto\HealthCheckDto;
-use SymfonyHealthCheckBundle\Enum\Status;
+use HealthChecksBundle\Check\CheckInterface;
+use HealthChecksBundle\Dto\HealthCheckDto;
+use HealthChecksBundle\Enum\Status;
 
 final class HealthController extends AbstractController
 {

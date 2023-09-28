@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace SymfonyHealthCheckBundle\Check;
+namespace HealthChecksBundle\Check;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use SymfonyHealthCheckBundle\Dto\ResponseDto;
+use HealthChecksBundle\Dto\ResponseDto;
 use Throwable;
 
 class DoctrineCheck implements CheckInterface

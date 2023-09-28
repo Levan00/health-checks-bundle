@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace SymfonyHealthCheckBundle\Check;
+namespace HealthChecksBundle\Check;
 
-use SymfonyHealthCheckBundle\Dto\ResponseDto;
+use HealthChecksBundle\Dto\ResponseDto;
 
 interface CheckInterface
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SymfonyHealthCheckBundle;
+namespace HealthChecksBundle;
 
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -10,10 +10,10 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-use SymfonyHealthCheckBundle\Check\PingCheck;
-use SymfonyHealthCheckBundle\Controller\HealthController;
+use HealthChecksBundle\Check\PingCheck;
+use HealthChecksBundle\Controller\HealthController;
 
-class SymfonyHealthCheckBundle extends AbstractBundle
+class HealthChecksBundle extends AbstractBundle
 {
     public function configure(DefinitionConfigurator $definition): void
     {
@@ -40,26 +40,26 @@ class SymfonyHealthCheckBundle extends AbstractBundle
 
     public function loadExtension(
         array $config,
-        ContainerConfigurator $containerConfigurator,
-        ContainerBuilder $containerBuilder
+        ContainerConfigurator $container,
+        ContainerBuilder $builder
     ): void
     {
-        $containerConfigurator->import('../config/services.yaml');
+        $container->import('../config/services.yaml');
 
-        $healthCheckCollection = $containerBuilder->findDefinition(HealthController::class);
+        $healthCheckCollection = $builder->findDefinition(HealthController::class);
 
         foreach ($config['health_checks'] as $healthCheckConfig) {
             $healthCheckDefinition = new Reference($healthCheckConfig['id']);
             $healthCheckCollection->addMethodCall('addHealthCheck', [$healthCheckDefinition]);
         }
 
-        foreach ($config['ping_checks'] as $number => $healthCheckConfig) {
-            $id = 'symfony_health_check.ping_check_' . $number;
+        foreach ($config['ping_checks'] as $number => $pingCheckConfig) {
+            $id = 'health_checks.ping_check_' . $number;
 
-            $containerConfigurator->services()
+            $container->services()
                 ->set($id, PingCheck::class)
-                    ->arg('$service', $healthCheckConfig['service'])
-                    ->arg('$endpoint', $healthCheckConfig['endpoint'])
+                    ->arg('$service', $pingCheckConfig['service'])
+                    ->arg('$endpoint', $pingCheckConfig['endpoint'])
             ;
 
             $healthCheckCollection->addMethodCall('addHealthCheck', [new Reference($id)]);

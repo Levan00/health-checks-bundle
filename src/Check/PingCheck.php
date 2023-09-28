@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace SymfonyHealthCheckBundle\Check;
+namespace HealthChecksBundle\Check;
 
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Stopwatch\Stopwatch;
-use SymfonyHealthCheckBundle\Dto\ResponseDto;
-use SymfonyHealthCheckBundle\Enum\Status;
+use HealthChecksBundle\Dto\ResponseDto;
+use HealthChecksBundle\Enum\Status;
 use Throwable;
 
 class PingCheck implements CheckInterface

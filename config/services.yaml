@@ -4,18 +4,18 @@ services:
         autoconfigure: true
         public: true
 
-    SymfonyHealthCheckBundle\Controller\HealthController:
+    HealthChecksBundle\Controller\HealthController:
         tags:
             - { name: container.service_subscriber }
 
-    SymfonyHealthCheckBundle\Controller\PingController:
+    HealthChecksBundle\Controller\PingController:
         tags:
             - { name: container.service_subscriber }
 
-    symfony_health_check.mongodb_connection_check:
-        class: SymfonyHealthCheckBundle\Check\MongoDbConnectionCheck
+    health_checks.mongodb_connection_check:
+        class: HealthChecksBundle\Check\MongoDbConnectionCheck
         arguments: [ '@service_container' ]
 
-    symfony_health_check.doctrine_check:
-        class: SymfonyHealthCheckBundle\Check\DoctrineCheck
+    health_checks.doctrine_check:
+        class: HealthChecksBundle\Check\DoctrineCheck
         arguments: [ '@service_container' ]

@@ -1,6 +1,6 @@
 {
-    "name": "ringostat/symfony-health-check-bundle",
-    "description": "Symfony Health Check Bundle",
+    "name": "ringostat/health-checks-bundle",
+    "description": "Health Checks Bundle",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "SymfonyHealthCheckBundle\\": "src"
+            "HealthChecksBundle\\": "src"
         }
     }
 }

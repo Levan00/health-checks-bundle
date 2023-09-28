@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace SymfonyHealthCheckBundle\Dto;
+namespace HealthChecksBundle\Dto;
 
 use DateTime;
 

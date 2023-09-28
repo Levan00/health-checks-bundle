@@ -1,8 +1,8 @@
 health:
     path: /health
-    controller: SymfonyHealthCheckBundle\Controller\HealthController::healthCheckAction
+    controller: HealthChecksBundle\Controller\HealthController::healthCheckAction
     methods: GET
 ping:
     path: /ping
-    controller: SymfonyHealthCheckBundle\Controller\PingController::pingAction
+    controller: HealthChecksBundle\Controller\PingController::pingAction
     methods: GET
