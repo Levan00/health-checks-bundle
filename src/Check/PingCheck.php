@@ -13,10 +13,12 @@ use Throwable;
 
 class PingCheck implements CheckInterface
 {
-    public const RESPONSE_TEXT = 'pong';
+    private const RESPONSE_TEXT = 'pong';
+    private const CHECK_NAME_PATTERN = '%s:ping';
+    private const CHECK_DESCRIPTION_PATTERN = 'Ping \'%s\' endpoint: %s';
 
     public function __construct(
-        private readonly string $name,
+        private readonly string $service,
         private readonly string $endpoint
     )
     {
@@ -26,7 +28,7 @@ class PingCheck implements CheckInterface
     {
         $stopwatch = new Stopwatch(true);
 
-        $stopwatch->start('status_up');
+        $stopwatch->start('ping');
 
         $client = HttpClient::create();
         try {
@@ -38,8 +40,6 @@ class PingCheck implements CheckInterface
             $responseText = '';
         }
 
-        $event = $stopwatch->stop('status_up');
-
         $responseStatus = match (true) {
             $statusCode !== Response::HTTP_OK => Status::FAIL,
             $responseText !== self::RESPONSE_TEXT => Status::WARNING,
@@ -47,10 +47,10 @@ class PingCheck implements CheckInterface
         };
 
         return new ResponseDto(
-            $this->name,
+            sprintf(self::CHECK_NAME_PATTERN, $this->service),
             $responseStatus,
-            'Description',
-            $event->getDuration()
+            sprintf(self::CHECK_DESCRIPTION_PATTERN, $this->service, $this->endpoint),
+            $stopwatch->stop('ping')->getDuration()
         );
     }
 }

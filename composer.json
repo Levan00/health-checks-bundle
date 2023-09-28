@@ -1,8 +1,20 @@
 {
     "name": "ringostat/health-checks-bundle",
     "description": "Health Checks Bundle",
-    "type": "project",
-    "license": "proprietary",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Levan",
+            "email": "y.lievandovskyi@ringostat.com",
+            "role": "Developer"
+        },
+        {
+            "name": "R&D",
+            "email": "rnd@ringostat.com",
+            "role": "Team"
+        }
+    ],
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
