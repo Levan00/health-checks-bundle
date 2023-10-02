@@ -39,11 +39,15 @@ class ResponseDto
 
     public function toArray(): array
     {
+        $seconds = $this->getDuration() / 1000;
+
+        $dateTime = DateTime::createFromFormat('U.u', $seconds ? strval($seconds) : '0.0');
+
         return [
             $this->getName() => [
                 'status' => $this->getStatus(),
                 'description' => $this->getDescription(),
-                'duration' => DateTime::createFromFormat('U.u', strval($this->getDuration() / 1000))->format("H:i:s.u"),
+                'duration' => $dateTime->format("H:i:s.u"),
             ]
         ];
     }

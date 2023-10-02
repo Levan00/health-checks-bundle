@@ -27,18 +27,22 @@ class MongoDbSelectCheck implements CheckInterface
 
         $stopwatch->start('mongodb_select');
 
-        if ($this->container->has('doctrine_mongodb') === false) {
+        if (
+            $this->container->has('doctrine_mongodb') === false
+            || $this->container->hasParameter('health_checks.mongodb_select_entity') === false
+        ) {
             return new ResponseDto(
                 self::CHECK_NAME,
                 Status::FAIL,
                 self::CHECK_DESCRIPTION,
-                $stopwatch->stop('mongodb_connection')->getDuration()
+                $stopwatch->stop('mongodb_select')->getDuration()
             );
         }
 
-        $entityManager = $this->container->get('doctrine_mongodb');
+        $className = $this->container->getParameter('health_checks.mongodb_select_entity');
+        $managerRegistry = $this->container->get('doctrine_mongodb');
 
-        $repository = $entityManager->getManager()->getRepository(Project::class);
+        $repository = $managerRegistry->getManager()->getRepository($className);
 
         try {
             $record = $repository->findBy([], ['_id' => 'ASC'], 1);
