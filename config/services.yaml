@@ -15,3 +15,7 @@ services:
     health_checks.mongodb_connection_check:
         class: Ringostat\HealthChecksBundle\Check\MongoDbConnectionCheck
         arguments: [ '@service_container' ]
+
+    health_checks.mongodb_select_check:
+        class: Ringostat\HealthChecksBundle\Check\MongoDbSelectCheck
+        arguments: [ '@service_container' ]
