@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace HealthChecksBundle\Check;
+namespace Ringostat\HealthChecksBundle\Check;
 
-use HealthChecksBundle\Dto\ResponseDto;
+use Ringostat\HealthChecksBundle\Dto\ResponseDto;
 
 interface CheckInterface
 {

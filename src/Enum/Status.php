@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HealthChecksBundle\Enum;
+namespace Ringostat\HealthChecksBundle\Enum;
 
 class Status
 {

@@ -4,18 +4,14 @@ services:
         autoconfigure: true
         public: true
 
-    HealthChecksBundle\Controller\HealthController:
+    Ringostat\HealthChecksBundle\Controller\HealthController:
         tags:
             - { name: container.service_subscriber }
 
-    HealthChecksBundle\Controller\PingController:
+    Ringostat\HealthChecksBundle\Controller\PingController:
         tags:
             - { name: container.service_subscriber }
 
     health_checks.mongodb_connection_check:
-        class: HealthChecksBundle\Check\MongoDbConnectionCheck
-        arguments: [ '@service_container' ]
-
-    health_checks.doctrine_check:
-        class: HealthChecksBundle\Check\DoctrineCheck
+        class: Ringostat\HealthChecksBundle\Check\MongoDbConnectionCheck
         arguments: [ '@service_container' ]

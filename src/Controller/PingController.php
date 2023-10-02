@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HealthChecksBundle\Controller;
+namespace Ringostat\HealthChecksBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;

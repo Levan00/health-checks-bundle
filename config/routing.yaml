@@ -1,0 +1,8 @@
+health:
+    path: /health
+    controller: Ringostat\HealthChecksBundle\Controller\HealthController::healthCheckAction
+    methods: GET
+ping:
+    path: /ping
+    controller: Ringostat\HealthChecksBundle\Controller\PingController::pingAction
+    methods: GET

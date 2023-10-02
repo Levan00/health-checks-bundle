@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace HealthChecksBundle\Check;
+namespace Ringostat\SymfonyHealthCheckBundle\Check;
 
 use MongoDB\Client;
 use MongoDB\Driver\Exception\ConnectionTimeoutException;
+use Ringostat\HealthChecksBundle\Check\CheckInterface;
+use Ringostat\SymfonyHealthCheckBundle\Dto\ResponseDto;
+use Ringostat\SymfonyHealthCheckBundle\Enum\Status;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
-use HealthChecksBundle\Dto\ResponseDto;
-use HealthChecksBundle\Enum\Status;
 
 class MongoDbConnectionCheck implements CheckInterface
 {

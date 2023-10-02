@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HealthChecksBundle\Dto;
+namespace Ringostat\HealthChecksBundle\Dto;
 
 use DateTime;
 

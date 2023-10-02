@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HealthChecksBundle;
+namespace Ringostat\HealthChecksBundle;
 
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -10,10 +10,10 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\Bundle\AbstractBundle;
 
-use HealthChecksBundle\Check\PingCheck;
-use HealthChecksBundle\Controller\HealthController;
+use Ringostat\HealthChecksBundle\Check\PingCheck;
+use Ringostat\HealthChecksBundle\Controller\HealthController;
 
-class HealthChecksBundle extends AbstractBundle
+class RingostatHealthChecksBundle extends AbstractBundle
 {
     public function configure(DefinitionConfigurator $definition): void
     {
@@ -54,7 +54,7 @@ class HealthChecksBundle extends AbstractBundle
         }
 
         foreach ($config['ping_checks'] as $number => $pingCheckConfig) {
-            $id = 'health_checks.ping_check_' . $number;
+            $id = 'ringostat_health_checks.ping_check_' . $number;
 
             $container->services()
                 ->set($id, PingCheck::class)

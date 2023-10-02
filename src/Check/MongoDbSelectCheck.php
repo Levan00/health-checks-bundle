@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace HealthChecksBundle\Check;
+namespace Ringostat\HealthChecksBundle\Check;
 
 use App\Entity\Project;
 use MongoDB\Client;
+use Ringostat\HealthChecksBundle\Dto\ResponseDto;
+use Ringostat\HealthChecksBundle\Enum\Status;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Stopwatch\Stopwatch;
-use HealthChecksBundle\Dto\ResponseDto;
-use HealthChecksBundle\Enum\Status;
 use Throwable;
 
 class MongoDbSelectCheck implements CheckInterface

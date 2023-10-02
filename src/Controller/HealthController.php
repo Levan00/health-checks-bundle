@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace HealthChecksBundle\Controller;
+namespace Ringostat\HealthChecksBundle\Controller;
 
 use DateTime;
+use Ringostat\HealthChecksBundle\Check\CheckInterface;
+use Ringostat\HealthChecksBundle\Enum\Status;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Stopwatch\Stopwatch;
-use HealthChecksBundle\Check\CheckInterface;
-use HealthChecksBundle\Dto\HealthCheckDto;
-use HealthChecksBundle\Enum\Status;
 
 final class HealthController extends AbstractController
 {

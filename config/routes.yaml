@@ -1,8 +1,0 @@
-health:
-    path: /health
-    controller: HealthChecksBundle\Controller\HealthController::healthCheckAction
-    methods: GET
-ping:
-    path: /ping
-    controller: HealthChecksBundle\Controller\PingController::pingAction
-    methods: GET
